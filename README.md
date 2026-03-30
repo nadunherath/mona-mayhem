@@ -1,38 +1,85 @@
 # 🎮 Mona Mayhem
 
-**VS Code & GitHub Copilot CLI Workshop** — Build a GitHub Contribution Battle Arena
+Build a retro GitHub contribution battle arena with Astro and GitHub Copilot.
 
-A workshop template for building a retro arcade-themed website with Astro that compares GitHub contribution graphs of two users. This is the **starting point** — you'll build the app step by step using GitHub Copilot.
+Mona Mayhem is a workshop repo with a very specific goal: take a tiny starter app and turn it into a loud, playful, arcade-style showdown between two GitHub users. It is designed to help you practice modern Copilot workflows while still shipping something that feels like a real product.
 
 ![Mona Mayhem Screenshot](https://github.com/user-attachments/assets/5eca79e2-cb9f-4e93-aa0d-23666ebde3b7)
-*What you'll build by the end of the workshop*
+*Retro energy, head-to-head competition, and plenty of room for Copilot-driven iteration.*
 
-## 📚 Workshop
+## Why It Exists
 
-The workshop supports two tracks — follow the one that matches your preferred workflow:
+Most AI demos stop at isolated prompts. This repo is about the full loop: planning, implementation, visual direction, review, polish, and iteration.
 
-- **VS Code track** — Chat, Plan Mode, Agent Mode, background agents, and editor-native review loops
-- **CLI track** — `copilot`, `@file` context, `/plan`, autonomous edits, `/fleet`, `/delegate`, and `/review`
+By the end of the workshop, you will have built an app that can:
 
-| Part | Title | Copilot Focus |
-|------|-------|---------------|
-| [00](workshop/00-overview.md) | Overview | Track selection and learning goals |
-| [01](workshop/01-setup.md) | Setup & Context Engineering | Instructions, permissions, and environment setup |
-| [02](workshop/02-plan-and-scaffold.md) | Plan & Scaffold | Planning the API and page architecture |
-| [03](workshop/03-agent-mode.md) | Build the Game | Agentic implementation and iteration |
-| [04](workshop/04-design-vibes.md) | Design-First Theming | Visual design planning and implementation |
-| [05](workshop/05-polish.md) | Polish & Parallel Work | Parallelism, reviews, and quality passes |
-| [06](workshop/06-bonus.md) | Bonus & Extensions | Open-ended feature ideas and extra Copilot experiments |
+- compare GitHub contribution activity between two users
+- present the matchup in a distinctive retro arcade interface
+- use Copilot workflows for planning, editing, reviewing, and refining code
 
-## 🚀 Quick Start
+## Choose Your Workflow
 
-1. **Create your own repo first** by either:
-   - clicking **Use this template** to create a new repo, or
-   - forking this repository.
-2. Choose your workshop path:
-   - **VS Code:** clone your repo and open it in VS Code.
-   - **GitHub Copilot CLI:** clone your repo locally, install `copilot`, and work from your terminal.
-3. Follow the [workshop guide](workshop/00-overview.md)
+You can complete Mona Mayhem in either environment:
+
+- **VS Code track** for chat, plan mode, agent mode, background agents, and editor-native review loops
+- **CLI track** for `copilot`, `@file` context, `/plan`, autonomous edits, `/fleet`, `/delegate`, and `/review`
+
+Start here: [workshop/00-overview.md](workshop/00-overview.md)
+
+## What You Will Build
+
+This repo starts intentionally lean. You will grow it into a battle screen that feels designed rather than generated.
+
+- a GitHub contribution matchup between two usernames
+- a themed UI with strong retro game energy
+- a small Astro app shaped through iterative Copilot collaboration
+
+## Quick Start
+
+1. Create your own copy of the repo by using the template or forking it.
+2. Clone it locally.
+3. Install dependencies.
+4. Start the dev server.
+5. Open the workshop and pick your track.
+
+```bash
+npm install
+npm run dev
+```
+
+Continue with:
+
+- [workshop/00-overview.md](workshop/00-overview.md)
+- [workshop/01-setup.md](workshop/01-setup.md)
+
+## Workshop Map
+
+| Part | Title | Outcome |
+|------|-------|---------|
+| [00](workshop/00-overview.md) | Overview | Pick a workflow and understand the end state |
+| [01](workshop/01-setup.md) | Setup & Context Engineering | Prepare the environment and improve Copilot context |
+| [02](workshop/02-plan-and-scaffold.md) | Plan & Scaffold | Define the page and API shape before coding |
+| [03](workshop/03-agent-mode.md) | Build the Game | Implement the experience with agentic help |
+| [04](workshop/04-design-vibes.md) | Design-First Theming | Push the app toward a distinct visual identity |
+| [05](workshop/05-polish.md) | Polish & Parallel Work | Tighten UX, resilience, and code quality |
+| [06](workshop/06-bonus.md) | Bonus & Extensions | Explore extra features and stretch ideas |
+
+## Why This Repo Is Useful
+
+- it gives Copilot a concrete product goal instead of a vague coding sandbox
+- it keeps the starting point small, so the implementation work is genuinely yours
+- it works as both a workshop and a reusable demo project for agent-driven development
+
+## Project Commands
+
+| Command | Purpose |
+|---------|---------|
+| `npm run dev` | Start the local Astro dev server |
+| `npm run build` | Create a production build |
+| `npm run preview` | Preview the production build locally |
+| `npm run lint` | Run ESLint across the repo |
+| `npm run lint:fix` | Auto-fix supported lint issues |
+| `npm run astro -- <args>` | Run Astro CLI commands directly |
 
 ## Prerequisites
 
@@ -42,23 +89,29 @@ The workshop supports two tracks — follow the one that matches your preferred 
 - Git
 - Node.js
 
-### VS Code track
+### VS Code Track
 
 - VS Code v1.107+
-- GitHub Copilot extension signed in
+- GitHub Copilot extension installed and signed in
 
-### CLI track
+### CLI Track
 
-- GitHub Copilot CLI (`copilot`)
-- Node.js 22+ if you plan to install the CLI via `npm install -g @github/copilot`
+- GitHub Copilot CLI as `copilot`
+- Node.js 22+ if you plan to install the CLI with `npm install -g @github/copilot`
 - Or Homebrew / WinGet if you prefer a native package manager install
 
-## Technology Stack
+## Tech Stack
 
-- **Framework**: [Astro](https://astro.build/) v5
-- **Runtime**: Node.js with [@astrojs/node](https://docs.astro.build/en/guides/integrations-guide/node/) adapter
-- **Font**: Press Start 2P (retro gaming font)
-- **API**: GitHub's contribution graph API
+- [Astro](https://astro.build/) v5
+- Node.js with [@astrojs/node](https://docs.astro.build/en/guides/integrations-guide/node/) standalone adapter
+- TypeScript strict mode
+- ESLint with Astro and TypeScript support
+
+## Repo Layout
+
+- `src/` and `public/` contain the runtime app
+- `workshop/` contains the guided exercises
+- `docs/` contains static design reference material
 
 ## License
 

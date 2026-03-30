@@ -1,17 +1,1033 @@
----
-
----
-
 <html lang="en">
 	<head>
 		<meta charset="utf-8" />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<meta name="viewport" content="width=device-width" />
 		<meta name="generator" content={Astro.generator} />
-		<title>Mona Mayhem</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+		<title>Mona Mayhem | GitHub Contribution Battle Arena</title>
+		<style>
+			:root {
+				color-scheme: dark;
+				--bg: #0a0a1a;
+				--bg-deep: #050512;
+				--panel: rgba(16, 16, 36, 0.82);
+				--panel-strong: rgba(20, 20, 44, 0.94);
+				--panel-inner: rgba(9, 9, 24, 0.88);
+				--text: #edf6ff;
+				--muted: #9fa6ca;
+				--line: rgba(138, 43, 226, 0.38);
+				--line-strong: rgba(95, 237, 131, 0.4);
+				--green: #5fed83;
+				--green-soft: rgba(95, 237, 131, 0.18);
+				--purple: #8a2be2;
+				--purple-soft: rgba(138, 43, 226, 0.18);
+				--shadow: 0 0 0 1px rgba(255, 255, 255, 0.02), 0 24px 60px rgba(0, 0, 0, 0.55);
+				--title-glow-green: 0 0 12px rgba(95, 237, 131, 0.75), 0 0 28px rgba(95, 237, 131, 0.45);
+				--title-glow-purple: 0 0 14px rgba(138, 43, 226, 0.72), 0 0 34px rgba(138, 43, 226, 0.42);
+				--heatmap-0: #13132b;
+				--heatmap-1: #153e28;
+				--heatmap-2: #236642;
+				--heatmap-3: #5fed83;
+				--heatmap-4: linear-gradient(135deg, #5fed83 0%, #8a2be2 100%);
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			html {
+				background: var(--bg);
+			}
+
+			body {
+				margin: 0;
+				min-height: 100vh;
+				font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+				color: var(--text);
+				background:
+					radial-gradient(circle at top left, rgba(138, 43, 226, 0.2), transparent 24%),
+					radial-gradient(circle at 80% 18%, rgba(95, 237, 131, 0.18), transparent 22%),
+					linear-gradient(180deg, rgba(10, 10, 26, 0.86) 0%, rgba(5, 5, 18, 0.95) 100%),
+					var(--bg);
+				position: relative;
+				overflow-x: hidden;
+			}
+
+			body::before,
+			body::after {
+				content: '';
+				position: fixed;
+				inset: 0;
+				pointer-events: none;
+			}
+
+			body::before {
+				background:
+					repeating-linear-gradient(
+						to bottom,
+						rgba(255, 255, 255, 0.035) 0,
+						rgba(255, 255, 255, 0.035) 1px,
+						transparent 1px,
+						transparent 4px
+					),
+					repeating-linear-gradient(
+						to right,
+						rgba(95, 237, 131, 0.03) 0,
+						rgba(95, 237, 131, 0.03) 1px,
+						transparent 1px,
+						transparent 72px
+					);
+				opacity: 0.22;
+				mix-blend-mode: screen;
+			}
+
+			body::after {
+				background:
+					radial-gradient(circle at center, transparent 50%, rgba(0, 0, 0, 0.55) 100%),
+					linear-gradient(180deg, rgba(255, 255, 255, 0.025), transparent 22%, transparent 78%, rgba(255, 255, 255, 0.02));
+			}
+
+			main {
+				position: relative;
+				z-index: 1;
+				max-width: 1220px;
+				margin: 0 auto;
+				padding: 54px 20px 88px;
+			}
+
+			.hero {
+				display: grid;
+				gap: 18px;
+				margin-bottom: 42px;
+			}
+
+			.kicker {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: fit-content;
+				padding: 14px 18px;
+				border: 1px solid rgba(95, 237, 131, 0.45);
+				background: linear-gradient(135deg, rgba(95, 237, 131, 0.14), rgba(138, 43, 226, 0.14));
+				box-shadow: 0 0 24px rgba(95, 237, 131, 0.16);
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.62rem;
+				line-height: 1.7;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+			}
+
+			h1 {
+				margin: 0;
+				max-width: 14ch;
+				font-family: 'Press Start 2P', monospace;
+				font-size: clamp(2.3rem, 8vw, 5.5rem);
+				line-height: 1.12;
+				letter-spacing: 0.02em;
+				color: #eafff0;
+				text-shadow: var(--title-glow-green), var(--title-glow-purple);
+				animation: neon-pulse 3s ease-in-out infinite;
+			}
+
+			.hero-copy {
+				max-width: 70ch;
+				margin: 0;
+				font-size: 1.08rem;
+				line-height: 1.8;
+				color: var(--muted);
+			}
+
+			.hero-strip {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 10px;
+			}
+
+			.hero-strip span {
+				padding: 10px 14px;
+				border: 1px solid rgba(138, 43, 226, 0.36);
+				background: rgba(10, 10, 26, 0.55);
+				color: var(--muted);
+				font-size: 0.85rem;
+			}
+
+			.arena-shell {
+				position: relative;
+			}
+
+			.arena {
+				display: grid;
+				gap: 26px;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+				align-items: start;
+			}
+
+			.panel {
+				position: relative;
+				padding: 28px;
+				border: 1px solid var(--line);
+				background: linear-gradient(180deg, rgba(18, 18, 40, 0.92), rgba(10, 10, 28, 0.96));
+				box-shadow: var(--shadow);
+				overflow: hidden;
+			}
+
+			.panel::before {
+				content: '';
+				position: absolute;
+				inset: 1px;
+				border: 1px solid rgba(255, 255, 255, 0.03);
+				pointer-events: none;
+			}
+
+			.panel::after {
+				content: '';
+				position: absolute;
+				inset: 0;
+				background: linear-gradient(135deg, rgba(95, 237, 131, 0.06), transparent 34%, rgba(138, 43, 226, 0.06));
+				pointer-events: none;
+			}
+
+			.form-panel {
+				z-index: 1;
+			}
+
+			.form-panel > * {
+				position: relative;
+				z-index: 1;
+			}
+
+			form {
+				display: grid;
+				gap: 18px;
+			}
+
+			fieldset {
+				margin: 0;
+				padding: 0;
+				border: 0;
+				display: grid;
+				gap: 18px;
+			}
+
+			.legend {
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.66rem;
+				line-height: 1.9;
+				text-transform: uppercase;
+				color: var(--green);
+			}
+
+			.player-input {
+				display: grid;
+				gap: 10px;
+				padding: 14px;
+				border: 1px solid rgba(138, 43, 226, 0.25);
+				background: rgba(8, 8, 24, 0.58);
+				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+				opacity: 0;
+				transform: translateY(24px);
+				animation: float-in 700ms cubic-bezier(0.2, 0.7, 0.2, 1) forwards;
+			}
+
+			.player-input:nth-of-type(1) {
+				animation-delay: 120ms;
+			}
+
+			.player-input:nth-of-type(2) {
+				animation-delay: 260ms;
+			}
+
+			.player-input span {
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.6rem;
+				line-height: 1.8;
+				color: #dbe4ff;
+			}
+
+			input {
+				width: 100%;
+				padding: 16px 18px;
+				border: 1px solid rgba(95, 237, 131, 0.24);
+				background: rgba(5, 5, 18, 0.88);
+				color: var(--text);
+				font: inherit;
+				font-size: 1rem;
+				box-shadow: inset 0 0 18px rgba(95, 237, 131, 0.05);
+			}
+
+			input::placeholder {
+				color: rgba(223, 229, 255, 0.36);
+			}
+
+			input:focus {
+				outline: none;
+				border-color: rgba(95, 237, 131, 0.8);
+				box-shadow: 0 0 0 3px rgba(95, 237, 131, 0.1), 0 0 18px rgba(95, 237, 131, 0.22);
+			}
+
+			.battle-button {
+				padding: 18px 20px;
+				border: 1px solid rgba(95, 237, 131, 0.55);
+				background: linear-gradient(135deg, rgba(95, 237, 131, 0.9), rgba(138, 43, 226, 0.92));
+				color: #03030a;
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.74rem;
+				line-height: 1.6;
+				text-transform: uppercase;
+				cursor: pointer;
+				box-shadow: 0 0 22px rgba(95, 237, 131, 0.2);
+				transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease, opacity 160ms ease;
+			}
+
+			.battle-button:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 0 28px rgba(95, 237, 131, 0.34), 0 0 18px rgba(138, 43, 226, 0.22);
+				filter: saturate(1.08);
+			}
+
+			.battle-button:disabled {
+				opacity: 0.72;
+				cursor: wait;
+			}
+
+			.helper,
+			.footnote {
+				margin: 0;
+				font-size: 0.94rem;
+				line-height: 1.7;
+				color: var(--muted);
+			}
+
+			.status {
+				min-height: 28px;
+				margin: 0;
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.6rem;
+				line-height: 1.9;
+				text-transform: uppercase;
+				color: #cfe8ff;
+			}
+
+			.status[data-tone='error'] {
+				color: #ff8ca1;
+			}
+
+			.status[data-tone='loading'] {
+				animation: loading-shift 1.8s linear infinite alternate;
+			}
+
+			.status[data-tone='success'] {
+				color: var(--green);
+			}
+
+			.vs-badge {
+				position: absolute;
+				left: 50%;
+				top: 50%;
+				z-index: 3;
+				width: 108px;
+				height: 108px;
+				border-radius: 999px;
+				border: 1px solid rgba(255, 255, 255, 0.12);
+				background: linear-gradient(135deg, rgba(95, 237, 131, 0.9), rgba(138, 43, 226, 0.94), rgba(95, 237, 131, 0.9));
+				background-size: 220% 220%;
+				transform: translate(-50%, -50%);
+				box-shadow: 0 0 26px rgba(95, 237, 131, 0.24), 0 0 38px rgba(138, 43, 226, 0.24);
+				display: grid;
+				place-items: center;
+				animation: badge-spectrum 8s linear infinite, badge-hover 5s ease-in-out infinite;
+			}
+
+			.vs-badge::before {
+				content: '';
+				position: absolute;
+				inset: 10px;
+				border-radius: 999px;
+				background: radial-gradient(circle, rgba(10, 10, 26, 0.26), rgba(10, 10, 26, 0.92));
+			}
+
+			.vs-badge span {
+				position: relative;
+				z-index: 1;
+				font-family: 'Press Start 2P', monospace;
+				font-size: 1rem;
+				color: white;
+				text-shadow: 0 0 10px rgba(255, 255, 255, 0.4);
+			}
+
+			.result-shell {
+				display: grid;
+				gap: 18px;
+				align-content: start;
+			}
+
+			.result-shell[hidden] {
+				display: none;
+			}
+
+			.result-shell.is-active {
+				animation: screen-rise 640ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+			}
+
+			.verdict {
+				position: relative;
+				padding: 18px 20px;
+				border: 1px solid rgba(95, 237, 131, 0.24);
+				background: rgba(8, 12, 26, 0.86);
+				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+			}
+
+			.verdict strong {
+				display: block;
+				margin-bottom: 10px;
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.72rem;
+				line-height: 1.8;
+				color: var(--green);
+			}
+
+			.result-grid {
+				display: grid;
+				gap: 18px;
+				grid-template-columns: repeat(2, minmax(0, 1fr));
+			}
+
+			.player-card {
+				position: relative;
+				overflow: hidden;
+				padding: 20px;
+				border: 1px solid rgba(138, 43, 226, 0.26);
+				background: linear-gradient(180deg, rgba(15, 15, 35, 0.96), rgba(7, 7, 20, 0.98));
+				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+			}
+
+			.player-card::after {
+				content: '';
+				position: absolute;
+				inset: -35%;
+				pointer-events: none;
+				background: linear-gradient(
+					115deg,
+					transparent 35%,
+					rgba(255, 255, 255, 0.025) 42%,
+					rgba(138, 43, 226, 0.14) 48%,
+					rgba(95, 237, 131, 0.18) 52%,
+					rgba(255, 255, 255, 0.025) 58%,
+					transparent 65%
+				);
+				transform: translate3d(-55%, -55%, 0) rotate(8deg);
+				opacity: 0.52;
+				animation: card-shimmer 4.8s linear infinite;
+			}
+
+			.player-card.is-winner {
+				border-color: rgba(95, 237, 131, 0.55);
+				box-shadow: inset 0 0 0 1px rgba(95, 237, 131, 0.16), 0 0 24px rgba(95, 237, 131, 0.12);
+			}
+
+			.player-card.is-winner::after {
+				background: linear-gradient(
+					115deg,
+					transparent 32%,
+					rgba(255, 255, 255, 0.03) 40%,
+					rgba(95, 237, 131, 0.24) 48%,
+					rgba(138, 43, 226, 0.16) 54%,
+					rgba(255, 255, 255, 0.03) 60%,
+					transparent 68%
+				);
+				opacity: 0.7;
+			}
+
+			.player-card > * {
+				position: relative;
+				z-index: 1;
+			}
+
+			.player-card-header {
+				display: flex;
+				justify-content: space-between;
+				gap: 12px;
+				align-items: flex-start;
+				margin-bottom: 14px;
+			}
+
+			.player-card h2 {
+				margin: 0;
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.9rem;
+				line-height: 1.7;
+				color: #fbfffd;
+			}
+
+			.player-state {
+				margin: 8px 0 0;
+				font-size: 0.95rem;
+				color: var(--muted);
+			}
+
+			.crown {
+				padding: 8px 10px;
+				border: 1px solid rgba(95, 237, 131, 0.32);
+				background: rgba(95, 237, 131, 0.12);
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.5rem;
+				line-height: 1.6;
+				text-transform: uppercase;
+				color: var(--green);
+			}
+
+			.stats {
+				display: grid;
+				grid-template-columns: repeat(3, minmax(0, 1fr));
+				gap: 10px;
+				margin: 16px 0 18px;
+			}
+
+			.stat {
+				padding: 12px;
+				border: 1px solid rgba(138, 43, 226, 0.22);
+				background: rgba(10, 10, 26, 0.7);
+				box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
+			}
+
+			.stat span {
+				display: block;
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.46rem;
+				line-height: 1.7;
+				text-transform: uppercase;
+				color: var(--muted);
+			}
+
+			.stat strong {
+				display: block;
+				margin-top: 8px;
+				font-size: 1.35rem;
+				color: #fbfffd;
+			}
+
+			.heatmap-shell {
+				display: grid;
+				gap: 10px;
+				margin-bottom: 16px;
+			}
+
+			.heatmap-label {
+				font-family: 'Press Start 2P', monospace;
+				font-size: 0.48rem;
+				line-height: 1.8;
+				text-transform: uppercase;
+				color: var(--muted);
+			}
+
+			.heatmap {
+				display: flex;
+				gap: 4px;
+				overflow-x: auto;
+				padding-bottom: 6px;
+				scrollbar-width: thin;
+				scrollbar-color: rgba(95, 237, 131, 0.35) rgba(10, 10, 26, 0.4);
+			}
+
+			.heatmap-week {
+				display: grid;
+				grid-template-rows: repeat(7, 10px);
+				gap: 4px;
+			}
+
+			.contribution-square {
+				width: 10px;
+				height: 10px;
+				border: 1px solid rgba(255, 255, 255, 0.04);
+				background: var(--heatmap-0);
+				transition: transform 140ms ease, box-shadow 140ms ease, border-color 140ms ease, filter 140ms ease;
+			}
+
+			.contribution-square.level-1 {
+				background: var(--heatmap-1);
+			}
+
+			.contribution-square.level-2 {
+				background: var(--heatmap-2);
+			}
+
+			.contribution-square.level-3 {
+				background: var(--heatmap-3);
+			}
+
+			.contribution-square.level-4 {
+				background: var(--heatmap-4);
+			}
+
+			.contribution-square:hover {
+				transform: translateY(-1px) scale(1.12);
+				border-color: rgba(95, 237, 131, 0.9);
+				box-shadow: 0 0 8px rgba(95, 237, 131, 0.65), 0 0 14px rgba(138, 43, 226, 0.4);
+				filter: saturate(1.2);
+			}
+
+			.player-meta {
+				margin: 0;
+				font-size: 0.88rem;
+				line-height: 1.7;
+				color: var(--muted);
+			}
+
+			@keyframes neon-pulse {
+				0%,
+				100% {
+					text-shadow: var(--title-glow-green), var(--title-glow-purple);
+					filter: brightness(0.96);
+				}
+				50% {
+					text-shadow:
+						0 0 18px rgba(95, 237, 131, 0.95),
+						0 0 32px rgba(95, 237, 131, 0.58),
+						0 0 20px rgba(138, 43, 226, 0.82),
+						0 0 42px rgba(138, 43, 226, 0.44);
+					filter: brightness(1.04);
+				}
+			}
+
+			@keyframes badge-spectrum {
+				0% {
+					background-position: 0% 50%;
+				}
+				100% {
+					background-position: 100% 50%;
+				}
+			}
+
+			@keyframes badge-hover {
+				0%,
+				100% {
+					transform: translate(-50%, -50%) rotate(-4deg);
+				}
+				50% {
+					transform: translate(-50%, -53%) rotate(4deg);
+				}
+			}
+
+			@keyframes float-in {
+				0% {
+					opacity: 0;
+					transform: translateY(24px);
+				}
+				100% {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@keyframes loading-shift {
+				0% {
+					color: var(--green);
+					text-shadow: 0 0 10px rgba(95, 237, 131, 0.38);
+				}
+				100% {
+					color: #b46bff;
+					text-shadow: 0 0 10px rgba(138, 43, 226, 0.48);
+				}
+			}
+
+			@keyframes card-shimmer {
+				0% {
+					transform: translate3d(-55%, -55%, 0) rotate(8deg);
+				}
+				100% {
+					transform: translate3d(55%, 55%, 0) rotate(8deg);
+				}
+			}
+
+			@keyframes screen-rise {
+				0% {
+					opacity: 0;
+					transform: translateY(18px);
+				}
+				100% {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+
+			@media (max-width: 1080px) {
+				.vs-badge {
+					position: static;
+					margin: 0 auto 18px;
+					transform: none;
+				}
+
+				.vs-badge span {
+					transform: none;
+				}
+
+				.arena {
+					grid-template-columns: 1fr;
+				}
+			}
+
+			@media (max-width: 820px) {
+				main {
+					padding: 30px 16px 56px;
+				}
+
+				h1 {
+					font-size: clamp(1.9rem, 10vw, 3rem);
+				}
+
+				.hero-copy {
+					font-size: 1rem;
+				}
+
+				.panel {
+					padding: 22px 18px;
+				}
+
+				.result-grid,
+				.stats {
+					grid-template-columns: 1fr;
+				}
+
+				.player-card-header {
+					flex-direction: column;
+				}
+			}
+
+			@media (prefers-reduced-motion: reduce) {
+				h1,
+				.vs-badge,
+				.player-card::after,
+				.player-input,
+				.status[data-tone='loading'],
+				.result-shell.is-active {
+					animation: none;
+				}
+
+				.player-input {
+					opacity: 1;
+					transform: none;
+				}
+
+				.player-card::after {
+					opacity: 0.2;
+				}
+
+				.contribution-square,
+				.battle-button {
+					transition: none;
+				}
+			}
+		</style>
 	</head>
 	<body>
-		<h1>Mona Mayhem</h1>
-		<p>Welcome to Mona Mayhem! Time to build a GitHub Contribution Battle Arena.</p>
+		<main>
+			<section class="hero">
+				<div class="kicker">Proxy Powered Commit Combat</div>
+				<h1>Mona Mayhem</h1>
+				<p class="hero-copy">
+					Step into a midnight arcade cabinet, summon two GitHub fighters, and let the battle screen decide who owns the stronger contribution streak.
+					Every matchup is fetched through your local proxy, so the glow stays in the browser while the data comes in clean from the server.
+				</p>
+				<div class="hero-strip">
+					<span>CRT scanlines</span>
+					<span>Green and purple neon</span>
+					<span>Live GitHub contribution data</span>
+				</div>
+			</section>
+
+			<section class="arena-shell">
+				<div class="vs-badge" aria-hidden="true"><span>VS</span></div>
+				<div class="arena">
+					<div class="panel form-panel">
+						<form id="battle-form">
+							<fieldset>
+								<div class="legend">Choose your challengers</div>
+								<label class="player-input">
+									<span>Player 1</span>
+									<input id="player-one" name="playerOne" type="text" placeholder="octocat" autocomplete="off" required />
+								</label>
+								<label class="player-input">
+									<span>Player 2</span>
+									<input id="player-two" name="playerTwo" type="text" placeholder="torvalds" autocomplete="off" required />
+								</label>
+							</fieldset>
+
+							<button class="battle-button" id="battle-button" type="submit">Battle</button>
+							<p class="helper">The arena compares total contributions first, then active days and best day as tie-breakers. Result cards also surface a recent contribution grid.</p>
+							<p id="status" class="status" aria-live="polite"></p>
+						</form>
+					</div>
+
+					<div class="panel result-shell" id="result-shell" hidden>
+						<div class="verdict" id="verdict"></div>
+						<div class="result-grid" id="result-grid"></div>
+						<p class="footnote" id="result-footnote"></p>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<script>
+			type ContributionDay = {
+				count?: number;
+				level?: number;
+				weekday?: number;
+			};
+
+			type ContributionWeek = {
+				first_day?: string;
+				contribution_days?: ContributionDay[];
+			};
+
+			type ContributionData = {
+				total_contributions?: number;
+				weeks?: ContributionWeek[];
+			};
+
+			type PlayerResponse = {
+				username: string;
+				data: ContributionData;
+				cached: boolean;
+				fetchedAt: string;
+				message?: string;
+			};
+
+			type PlayerStats = {
+				username: string;
+				totalContributions: number;
+				activeDays: number;
+				bestDay: number;
+				cached: boolean;
+				fetchedAt: string;
+				recentWeeks: ContributionWeek[];
+			};
+
+			const RECENT_WEEKS_TO_SHOW = 18;
+
+			const battleForm = document.querySelector<HTMLFormElement>('#battle-form');
+			const battleButton = document.querySelector<HTMLButtonElement>('#battle-button');
+			const status = document.querySelector<HTMLParagraphElement>('#status');
+			const resultShell = document.querySelector<HTMLDivElement>('#result-shell');
+			const verdict = document.querySelector<HTMLDivElement>('#verdict');
+			const resultGrid = document.querySelector<HTMLDivElement>('#result-grid');
+			const resultFootnote = document.querySelector<HTMLParagraphElement>('#result-footnote');
+
+			if (battleForm && battleButton && status && resultShell && verdict && resultGrid && resultFootnote) {
+				const escapeHtml = (value: string) =>
+					value.replace(/[&<>"']/g, (character: string) => {
+						const replacements: Record<string, string> = {
+							'&': '&amp;',
+							'<': '&lt;',
+							'>': '&gt;',
+							'"': '&quot;',
+							"'": '&#39;',
+						};
+
+						return replacements[character] ?? character;
+					});
+
+				const setStatus = (message: string, tone = '') => {
+					status.textContent = message;
+					if (tone) {
+						status.dataset.tone = tone;
+					} else {
+						delete status.dataset.tone;
+					}
+				};
+
+				const flattenContributionDays = (payload: ContributionData) =>
+					(payload.weeks ?? []).flatMap((week: ContributionWeek) => week.contribution_days ?? []);
+
+				const getRecentWeeks = (payload: ContributionData) => (payload.weeks ?? []).slice(-RECENT_WEEKS_TO_SHOW);
+
+				const getPlayerStats = (player: PlayerResponse): PlayerStats => {
+					const days = flattenContributionDays(player.data);
+					const activeDays = days.filter((day: ContributionDay) => (day.count ?? 0) > 0).length;
+					const bestDay = days.reduce(
+						(highest: number, day: ContributionDay) => Math.max(highest, day.count ?? 0),
+						0,
+					);
+
+					return {
+						username: player.username,
+						totalContributions: player.data.total_contributions ?? 0,
+						activeDays,
+						bestDay,
+						cached: player.cached,
+						fetchedAt: player.fetchedAt,
+						recentWeeks: getRecentWeeks(player.data),
+					};
+				};
+
+				const comparePlayers = (left: PlayerStats, right: PlayerStats): PlayerStats | null => {
+					if (left.totalContributions !== right.totalContributions) {
+						return left.totalContributions > right.totalContributions ? left : right;
+					}
+
+					if (left.activeDays !== right.activeDays) {
+						return left.activeDays > right.activeDays ? left : right;
+					}
+
+					if (left.bestDay !== right.bestDay) {
+						return left.bestDay > right.bestDay ? left : right;
+					}
+
+					return null;
+				};
+
+				const getContributionDate = (firstDay: string | undefined, weekday: number | undefined) => {
+					if (!firstDay || weekday === undefined) {
+						return null;
+					}
+
+					const date = new Date(`${firstDay}T00:00:00Z`);
+					if (Number.isNaN(date.getTime())) {
+						return null;
+					}
+
+					date.setUTCDate(date.getUTCDate() + weekday);
+					return date.toISOString().slice(0, 10);
+				};
+
+				const renderHeatmap = (weeks: ContributionWeek[]) =>
+					weeks
+						.map((week: ContributionWeek) => {
+							const days = Array.from({ length: 7 }, (_, index) => {
+								const day = week.contribution_days?.[index] ?? { count: 0, level: 0, weekday: index };
+								const level = Math.max(0, Math.min(4, day.level ?? 0));
+								const count = day.count ?? 0;
+								const dateLabel = getContributionDate(week.first_day, day.weekday ?? index);
+								const squareLabel = dateLabel
+									? `${dateLabel}: ${count} ${count === 1 ? 'contribution' : 'contributions'}`
+									: `${count} ${count === 1 ? 'contribution' : 'contributions'}`;
+
+								return `<span class="contribution-square level-${level}" title="${escapeHtml(squareLabel)}"></span>`;
+							});
+
+							return `<div class="heatmap-week">${days.join('')}</div>`;
+						})
+						.join('');
+
+				const renderPlayerCard = (player: PlayerStats, isWinner: boolean) => {
+					const winnerClass = isWinner ? 'player-card is-winner' : 'player-card';
+					const freshness = player.cached ? 'served from cache' : 'fresh from GitHub';
+					const crown = isWinner ? '<div class="crown">Arcade leader</div>' : '';
+
+					return `
+						<article class="${winnerClass}">
+							<div class="player-card-header">
+								<div>
+									<h2>${escapeHtml(player.username)}</h2>
+									<p class="player-state">${isWinner ? 'Current leader' : 'Still in the fight'}</p>
+								</div>
+								${crown}
+							</div>
+							<div class="stats">
+								<div class="stat">
+									<span>Total</span>
+									<strong>${player.totalContributions}</strong>
+								</div>
+								<div class="stat">
+									<span>Active Days</span>
+									<strong>${player.activeDays}</strong>
+								</div>
+								<div class="stat">
+									<span>Best Day</span>
+									<strong>${player.bestDay}</strong>
+								</div>
+							</div>
+							<div class="heatmap-shell">
+								<div class="heatmap-label">Recent activity grid</div>
+								<div class="heatmap" aria-hidden="true">${renderHeatmap(player.recentWeeks)}</div>
+							</div>
+							<p class="player-meta">${freshness}. Last fetched at ${escapeHtml(player.fetchedAt)}.</p>
+						</article>
+					`;
+				};
+
+				const activateResults = () => {
+					resultShell.classList.remove('is-active');
+					resultShell.hidden = false;
+					requestAnimationFrame(() => {
+						resultShell.classList.add('is-active');
+					});
+				};
+
+				const renderBattle = (leftPlayer: PlayerStats, rightPlayer: PlayerStats) => {
+					const winner = comparePlayers(leftPlayer, rightPlayer);
+
+					if (winner) {
+						verdict.innerHTML = `
+							<strong>${escapeHtml(winner.username)} wins the cabinet.</strong>
+							Totals call the winner first, with active days and best day stepping in as the final tie-breakers.
+						`;
+					} else {
+						verdict.innerHTML = `
+							<strong>Dead heat on the scoreboard.</strong>
+							Both fighters matched on total contributions, active days, and best day.
+						`;
+					}
+
+					resultGrid.innerHTML = [
+						renderPlayerCard(leftPlayer, winner?.username === leftPlayer.username),
+						renderPlayerCard(rightPlayer, winner?.username === rightPlayer.username),
+					].join('');
+
+					resultFootnote.textContent = `Showing the latest ${RECENT_WEEKS_TO_SHOW} weeks of contribution activity with neon hover glow on each contribution square.`;
+					activateResults();
+				};
+
+				const fetchPlayer = async (username: string): Promise<PlayerResponse> => {
+					const response = await fetch(`/api/contributions/${encodeURIComponent(username)}`);
+					const payload = (await response.json()) as PlayerResponse;
+
+					if (!response.ok) {
+						throw new Error(payload.message ?? `Unable to load ${username}.`);
+					}
+
+					return payload;
+				};
+
+				battleForm.addEventListener('submit', async (event) => {
+					event.preventDefault();
+
+					const formData = new FormData(battleForm);
+					const playerOne = String(formData.get('playerOne') ?? '').trim();
+					const playerTwo = String(formData.get('playerTwo') ?? '').trim();
+
+					if (!playerOne || !playerTwo) {
+						setStatus('Enter both GitHub usernames before starting the battle.', 'error');
+						resultShell.hidden = true;
+						resultShell.classList.remove('is-active');
+						return;
+					}
+
+					battleButton.disabled = true;
+					setStatus('Scanning both contribution graphs...', 'loading');
+					resultShell.hidden = true;
+					resultShell.classList.remove('is-active');
+
+					try {
+						const [playerOneData, playerTwoData] = await Promise.all([
+							fetchPlayer(playerOne),
+							fetchPlayer(playerTwo),
+						]);
+
+						renderBattle(getPlayerStats(playerOneData), getPlayerStats(playerTwoData));
+						setStatus('Battle complete.', 'success');
+					} catch (error: unknown) {
+						const message = error instanceof Error ? error.message : 'Something went wrong while loading battle data.';
+						setStatus(message, 'error');
+						resultShell.hidden = true;
+						resultShell.classList.remove('is-active');
+					} finally {
+						battleButton.disabled = false;
+					}
+				});
+			}
+		</script>
 	</body>
 </html>
