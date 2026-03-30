@@ -268,6 +268,12 @@
 				box-shadow: 0 0 0 3px rgba(95, 237, 131, 0.1), 0 0 18px rgba(95, 237, 131, 0.22);
 			}
 
+			input:focus-visible,
+			.battle-button:focus-visible {
+				outline: 3px solid rgba(95, 237, 131, 0.95);
+				outline-offset: 4px;
+			}
+
 			.battle-button {
 				padding: 18px 20px;
 				border: 1px solid rgba(95, 237, 131, 0.55);
@@ -286,6 +292,10 @@
 				transform: translateY(-2px);
 				box-shadow: 0 0 28px rgba(95, 237, 131, 0.34), 0 0 18px rgba(138, 43, 226, 0.22);
 				filter: saturate(1.08);
+			}
+
+			.battle-button:focus-visible {
+				box-shadow: 0 0 0 3px rgba(10, 10, 26, 0.92), 0 0 0 6px rgba(95, 237, 131, 0.3), 0 0 28px rgba(95, 237, 131, 0.34), 0 0 18px rgba(138, 43, 226, 0.22);
 			}
 
 			.battle-button:disabled {
@@ -569,6 +579,11 @@
 				filter: saturate(1.2);
 			}
 
+			.player-input:focus-within {
+				border-color: rgba(95, 237, 131, 0.62);
+				box-shadow: inset 0 0 0 1px rgba(95, 237, 131, 0.2), 0 0 0 2px rgba(95, 237, 131, 0.08);
+			}
+
 			.player-meta {
 				margin: 0;
 				font-size: 0.88rem;
@@ -653,7 +668,7 @@
 				}
 			}
 
-			@media (max-width: 1080px) {
+			@media (max-width: 1024px) {
 				.vs-badge {
 					position: static;
 					margin: 0 auto 18px;
@@ -667,23 +682,64 @@
 				.arena {
 					grid-template-columns: 1fr;
 				}
+
+				.result-grid {
+					grid-template-columns: 1fr;
+				}
 			}
 
-			@media (max-width: 820px) {
+			@media (max-width: 768px) {
 				main {
-					padding: 30px 16px 56px;
+					padding: 28px 14px 52px;
 				}
 
 				h1 {
-					font-size: clamp(1.9rem, 10vw, 3rem);
+					font-size: clamp(1.65rem, 11vw, 2.55rem);
+					line-height: 1.18;
+				}
+
+				.kicker {
+					padding: 12px 14px;
+					font-size: 0.52rem;
 				}
 
 				.hero-copy {
-					font-size: 1rem;
+					font-size: 0.96rem;
+					line-height: 1.7;
+				}
+
+				.hero-strip {
+					flex-direction: column;
+				}
+
+				.hero-strip span {
+					font-size: 0.78rem;
 				}
 
 				.panel {
-					padding: 22px 18px;
+					padding: 20px 16px;
+				}
+
+				.legend,
+				.status,
+				.heatmap-label,
+				.crown,
+				.stat span {
+					font-size: 0.42rem;
+					line-height: 1.8;
+				}
+
+				.player-input {
+					padding: 12px;
+				}
+
+				.player-input span {
+					font-size: 0.5rem;
+				}
+
+				fieldset {
+					grid-template-columns: 1fr;
+					gap: 14px;
 				}
 
 				.result-grid,
@@ -693,6 +749,36 @@
 
 				.player-card-header {
 					flex-direction: column;
+				}
+
+				.player-card h2 {
+					font-size: 0.72rem;
+				}
+
+				.player-state,
+				.player-meta,
+				.helper,
+				.footnote {
+					font-size: 0.86rem;
+				}
+
+				.stat strong {
+					font-size: 1.16rem;
+				}
+
+				.vs-badge {
+					width: 84px;
+					height: 84px;
+					margin-bottom: 14px;
+				}
+
+				.vs-badge span {
+					font-size: 0.8rem;
+				}
+
+				input,
+				.battle-button {
+					font-size: 0.94rem;
 				}
 			}
 
